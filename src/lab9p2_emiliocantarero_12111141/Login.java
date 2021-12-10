@@ -208,6 +208,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         jButton6.setText("Terminar");
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton6MouseClicked(evt);
+            }
+        });
 
         jLabel11.setText("Nombre");
 
@@ -355,6 +360,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         jButton8.setText("Terminar");
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton8MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -757,6 +767,24 @@ public class Login extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton7MouseClicked
+
+    private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
+        // TODO add your handling code here:
+        taC.setText("");
+        JOptionPane.showMessageDialog(cliente, "Chat terminado");
+
+    }//GEN-LAST:event_jButton8MouseClicked
+
+    private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
+        // TODO add your handling code here:
+        taP.setText("");
+        usuarioP.setText("");
+        nombreP.setText("");
+        contraP.setText("");
+        edadP.setText("");
+        chat.setEnabled(true);
+        JOptionPane.showMessageDialog(personal, "Chat terminado");
+    }//GEN-LAST:event_jButton6MouseClicked
 
     /**
      * @param args the command line arguments
