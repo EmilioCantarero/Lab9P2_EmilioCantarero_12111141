@@ -412,6 +412,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         jButton10.setText("Editar");
+        jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton10MouseClicked(evt);
+            }
+        });
 
         jButton11.setText("Eliminar");
 
@@ -644,6 +649,11 @@ public class Login extends javax.swing.JFrame {
         crear();
     }//GEN-LAST:event_jButton9MouseClicked
 
+    private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseClicked
+        // TODO add your handling code here:
+        editar();
+    }//GEN-LAST:event_jButton10MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -826,6 +836,29 @@ public class Login extends javax.swing.JFrame {
         }
         db.desconectar();
     }
+    
+    public void editar(){
+        int fila=jt_tabla.getSelectedRow();
+        String usuario=jt_tabla.getValueAt(fila, 0).toString();
+        String n=nombreA.getText();
+        String u=usuarioA.getText();
+        String c=contraA.getText();
+        int e=Integer.parseInt(edadA.getText());
+        String t=cbTipo.getSelectedItem().toString();
+        
+        Dba db = new Dba("./Usuarios.mdb");
+        db.conectar();
+        try {
+            db.query.execute("update Usuarios set Usuario='" + u + "',Nombre='" + n
+                    + "',Contraseña='" + c + "',Edad='" + e + "',Tipo='" + t + "'   where Usuario='" + usuario + "'");
+            db.commit();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        db.desconectar();
+        refrescarTabla();
+    }
+    
     ArrayList<Usuario> users;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
