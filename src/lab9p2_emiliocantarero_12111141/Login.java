@@ -73,7 +73,7 @@ public class Login extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         taC = new javax.swing.JTextArea();
-        jTextField9 = new javax.swing.JTextField();
+        tfC = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         administrador = new javax.swing.JDialog();
@@ -192,6 +192,7 @@ public class Login extends javax.swing.JFrame {
 
         jButton4.setText("Chat");
 
+        taP.setEditable(false);
         taP.setColumns(20);
         taP.setRows(5);
         taP.setEnabled(false);
@@ -341,11 +342,17 @@ public class Login extends javax.swing.JFrame {
         jLabel15.setForeground(java.awt.SystemColor.activeCaption);
         jLabel15.setText("Soporte de Cliente");
 
+        taC.setEditable(false);
         taC.setColumns(20);
         taC.setRows(5);
         jScrollPane2.setViewportView(taC);
 
         jButton7.setText("Enviar");
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton7MouseClicked(evt);
+            }
+        });
 
         jButton8.setText("Terminar");
 
@@ -357,7 +364,7 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
-                    .addComponent(jTextField9)
+                    .addComponent(tfC)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
@@ -376,7 +383,7 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton7)
@@ -726,11 +733,30 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
         // TODO add your handling code here:
-        if (cliente.isActive()) {
-            String mensaje = taP.getText();
+        if (tfP.getText().equals("")) {
 
+        } else {
+            taC.append(personalConectado + ":" + " " + tfP.getText() + "\n");
+            taP.append(personalConectado + ":" + " " + tfP.getText() + "\n");
+            tfP.setText("");
         }
+
     }//GEN-LAST:event_jButton5MouseClicked
+
+    private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
+        // TODO add your handling code here:
+        if (taC.getText().equals("")) {
+
+        } else {
+            if (tfC.getText().equals("")) {
+
+            } else {
+                taP.append(clienteConectado + ":" + " "+tfC.getText() + "\n");
+                taC.append(clienteConectado + ":" + " "+tfC.getText() + "\n");
+                tfC.setText("");
+            }
+        }
+    }//GEN-LAST:event_jButton7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -749,13 +775,17 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -817,6 +847,7 @@ public class Login extends javax.swing.JFrame {
                         cbConectados.removeAllItems();
                         cbConectados.addItem(u);
                         chat.setEnabled(true);
+                        clienteConectado=u;
                     } else if (user.getTipo().equals("Administrador")) {
                         abrirVentanaAdmin();
                         DefaultTableModel m = (DefaultTableModel) jt_tabla.getModel();
@@ -846,7 +877,7 @@ public class Login extends javax.swing.JFrame {
 
     }
     String personalConectado;
-
+    String clienteConectado;
     public ArrayList<String> recogerUsers() {
         ArrayList<String> usuarios = new ArrayList();
         Dba db = new Dba("./Usuarios.mdb");
@@ -1015,7 +1046,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JSpinner js_edad;
     private javax.swing.JTable jt_tabla;
     private javax.swing.JTextField nombreA;
@@ -1024,6 +1054,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JDialog registro;
     private javax.swing.JTextArea taC;
     private javax.swing.JTextArea taP;
+    private javax.swing.JTextField tfC;
     private javax.swing.JTextField tfP;
     private javax.swing.JPasswordField tf_contra;
     private javax.swing.JPasswordField tf_contraR;
