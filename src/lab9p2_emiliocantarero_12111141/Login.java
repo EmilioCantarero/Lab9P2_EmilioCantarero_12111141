@@ -419,6 +419,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         jButton11.setText("Eliminar");
+        jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton11MouseClicked(evt);
+            }
+        });
 
         cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Personal", "EL ADMIN" }));
 
@@ -654,6 +659,11 @@ public class Login extends javax.swing.JFrame {
         editar();
     }//GEN-LAST:event_jButton10MouseClicked
 
+    private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseClicked
+        // TODO add your handling code here:
+        eliminar();
+    }//GEN-LAST:event_jButton11MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -694,6 +704,25 @@ public class Login extends javax.swing.JFrame {
         });
     }
 
+    public void eliminar(){
+        Dba db = new Dba("./Usuarios.mdb");
+        String usuario=usuarioA.getText();
+        db.conectar();
+        try {
+            db.query.execute("delete from Usuarios where Usuario='" + usuario + "'");
+            db.commit();
+            JOptionPane.showMessageDialog(administrador, "Eliminado exitosamente");
+            nombreA.setText("");
+            usuarioA.setText("");
+            contraA.setText("");
+            edadA.setText("");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        db.desconectar();
+        refrescarTabla();
+    }
+    
     public void ingresar() {
         users = new ArrayList();
         String u = tf_usuario.getText(), c = tf_contra.getText();
@@ -765,25 +794,25 @@ public class Login extends javax.swing.JFrame {
 
     public void abrirVentanaRegistro() {
         registro.pack();
-        registro.setLocationRelativeTo(this);
+        registro.setLocationRelativeTo(null);
         registro.setVisible(true);
     }
 
     public void abrirVentanaCliente() {
         cliente.pack();
-        cliente.setLocationRelativeTo(this);
+        cliente.setLocationRelativeTo(null);
         cliente.setVisible(true);
     }
 
     public void abrirVentanaAdmin() {
         administrador.pack();
-        administrador.setLocationRelativeTo(this);
+        administrador.setLocationRelativeTo(null);
         administrador.setVisible(true);
     }
 
     public void abrirVentanaPersonal() {
         personal.pack();
-        personal.setLocationRelativeTo(this);
+        personal.setLocationRelativeTo(null);
         personal.setVisible(true);
     }
 
@@ -808,7 +837,7 @@ public class Login extends javax.swing.JFrame {
                             + " (Usuario,Nombre,Contraseña,Edad,Tipo)"
                             + " VALUES ('" + u + "', '" + n + "','" + c + "','" + e + "','" + t + "' )");
                     db.commit();
-                    JOptionPane.showMessageDialog(registro, "Creado exitosamente");
+                    JOptionPane.showMessageDialog(administrador, "Creado exitosamente");
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -852,6 +881,7 @@ public class Login extends javax.swing.JFrame {
             db.query.execute("update Usuarios set Usuario='" + u + "',Nombre='" + n
                     + "',Contraseña='" + c + "',Edad='" + e + "',Tipo='" + t + "'   where Usuario='" + usuario + "'");
             db.commit();
+            JOptionPane.showMessageDialog(administrador, "Editado exitosamente");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
